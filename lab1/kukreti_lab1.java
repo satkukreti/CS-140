@@ -1,0 +1,86 @@
+//Satvik Kukreti, i think class section is A52
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.text.DecimalFormat;
+import java.util.StringTokenizer;
+
+class kukreti_lab1
+{
+	public static void main (String[]args)
+	{
+
+		if (args.length == 0)
+		{
+			System.out.println("There are no commandline arguments");
+			System.exit(0);
+		} 
+
+
+		String addInputs[] = new String[args.length - 1];
+		int addCounter[] = new int[args.length - 1];
+			
+		for (int i = 1; i < args.length; i++)
+		{
+				addInputs[i-1] = args[i];
+		}
+
+		DecimalFormat df = new DecimalFormat("###, ###, ###, ###, ###");
+
+		try
+		{
+			BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(args[0]))); //each one adds new methods you can use
+			String inn;
+			long numLines = 0;
+			long totalTokens = 0;
+			long intTokens = 0;
+			long intSum = 0;
+			while((inn = input.readLine()) != null) //saves each line in the text as a String
+			{
+				StringTokenizer st = new StringTokenizer(inn); //breaks the line into words
+				numLines++;
+				while (st.hasMoreTokens())
+				{
+					totalTokens++;
+					String token = st.nextToken(); //returns the next token
+					for (int i = 0; i < addInputs.length; i++)
+					{
+						if (token.equalsIgnoreCase(addInputs[i]))
+						{
+							addCounter[i]++;
+						}
+					}			
+					
+					try
+					{
+						int makeInt = Integer.parseInt(token); //makes token to Integer
+						intTokens++;
+						intSum += makeInt;
+					}
+					catch (Exception e)
+					{
+
+					}
+				}
+				
+			}
+			input.close();
+			System.out.println("Lines in the file are: " + df.format(numLines));
+			System.out.println("Total tokens are: " + df.format(totalTokens));
+			System.out.println("Total int tokens are: " + df.format(intTokens));
+			System.out.println("Sum of the ints is: " + df.format(intSum));
+			for (int i = 0; i < addInputs.length; i++)
+			{
+				System.out.println(addInputs[i] + " occurs: " + addCounter[i] + " times");
+			}
+		}	
+		catch (Exception e)
+		{
+			System.out.println(e.toString());
+			System.exit(0);
+
+		}
+
+	}
+}
